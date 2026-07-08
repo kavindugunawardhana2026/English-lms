@@ -15,6 +15,8 @@ import Dashboard from './pages/Dashboard';
 import Exercises from './pages/Exercises';
 import ExerciseDetail from './pages/ExerciseDetail';
 import Profile from './pages/Profile';
+import CourseCatalog from './pages/CourseCatalog';
+import AdminLayout from './pages/admin/AdminDashboard';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -24,6 +26,7 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         {/* Public */}
         <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+        <Route path="/courses" element={<PageTransition><CourseCatalog /></PageTransition>} />
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
 
@@ -39,6 +42,13 @@ const AnimatedRoutes = () => {
         } />
         <Route path="/profile" element={
           <ProtectedRoute><PageTransition><Profile /></PageTransition></ProtectedRoute>
+        } />
+
+        {/* Admin / Teacher */}
+        <Route path="/admin/*" element={
+          <ProtectedRoute requiredRole="teacher">
+            <PageTransition><AdminLayout /></PageTransition>
+          </ProtectedRoute>
         } />
 
         {/* Fallback */}

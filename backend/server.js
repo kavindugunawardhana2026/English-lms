@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
 const connectDB = require('./config/db');
 
 // Load environment variables
@@ -18,6 +19,9 @@ app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Serve static uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // ── Routes ────────────────────────────────────────────────
 app.get('/', (req, res) => {
   res.json({ message: "Welcome to Kavindu's English LMS API" });
@@ -30,6 +34,9 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/content', require('./routes/content'));
 app.use('/api/exercises', require('./routes/exercises'));
+app.use('/api/assignments', require('./routes/assignments'));
+app.use('/api/live-classes', require('./routes/liveClasses'));
+app.use('/api/marks', require('./routes/marks'));
 
 // 404 handler
 app.use('*', (req, res) => {

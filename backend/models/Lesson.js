@@ -20,6 +20,10 @@ const lessonSchema = new mongoose.Schema({
     trim: true,
     default: '',
   },
+  materials: [{
+    title: { type: String, required: true },
+    fileUrl: { type: String, required: true },
+  }],
   order: {
     type: Number,
     default: 0,
